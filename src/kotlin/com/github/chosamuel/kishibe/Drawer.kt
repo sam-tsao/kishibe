@@ -1,5 +1,6 @@
 package com.github.chosamuel.kishibe
 
+import com.github.chosamuel.kishibe.noise.OpenSimplexNoise
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.CanvasRenderingContext2D
@@ -15,6 +16,11 @@ class Drawer(
     val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
     var frameCount = 0
     var drawLoop = {}
+    var useFill = true
+    var useStroke = false
+    var strokeStyle = "black"
+    var fillStyle = "white"
+    val n = OpenSimplexNoise()
 
     init {
         document.body?.appendChild(canvas)
@@ -26,17 +32,12 @@ class Drawer(
         drawLoop = drawFunction
     }
 
-    fun drawCall(){
-        drawLoop()
-    }
-
     fun start() {
-        drawCall()
+        drawLoop()
         frameCount++
 
-        val myFunc = { it: Double ->
+        window.requestAnimationFrame{
             start()
         }
-        window.requestAnimationFrame(myFunc)
     }
 }
