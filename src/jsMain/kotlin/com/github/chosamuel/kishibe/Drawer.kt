@@ -9,6 +9,18 @@ import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.events.MouseEvent
 
+var frameCount = 0
+var mouseX: Double = 0.0
+var mouseY: Double = 0.0
+var pMouseX: Double = 0.0
+var pMouseY: Double = 0.0
+val pMouse: Vec2
+    get() = Vec2(pMouseX, pMouseY)
+val mouse: Vec2
+    get() = Vec2(mouseX, mouseY)
+val KISHIBE_NOISE = OpenSimplexNoise()
+
+
 fun Drawer(init: Drawer.() -> Unit) = Drawer().apply { init()}
 
 class Drawer() {
@@ -29,16 +41,6 @@ class Drawer() {
     var fillStyle = "white"
 
     //GLOBAL VARIABLES
-    var frameCount = 0
-    var mouseX: Double = 0.0
-    var mouseY: Double = 0.0
-    val mouse: Vec2
-        get(){
-            return Vec2(mouseX, mouseY)
-        }
-
-    //WRAPPERS
-    val n = OpenSimplexNoise()
 
     //HOOKS
     var setupBlock ={}
@@ -47,6 +49,8 @@ class Drawer() {
     init {
         window.addEventListener("mousemove",{
             val event = it as MouseEvent
+            pMouseX = mouseX
+            pMouseY = mouseY
             mouseX = event.clientX * 1.0
             mouseY = event.clientY * 1.0
         })

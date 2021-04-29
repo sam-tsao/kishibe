@@ -5,7 +5,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class Vec2(val x: Double = 0.0, val y: Double = 0.0) {
+class Vec2(var x: Double = 0.0, var y: Double = 0.0) {
 
     constructor(x: Double) : this(x, x)
 
@@ -28,6 +28,8 @@ class Vec2(val x: Double = 0.0, val y: Double = 0.0) {
     infix fun cross(right: Vec2) = x * right.y - y * right.x
 
     infix fun dot(right: Vec2) = x * right.x + y * right.y
+
+    infix fun reflect(surfaceNormal: Vec2): Vec2 = this - surfaceNormal * (this dot surfaceNormal) * 2.0
 
     fun rotate(degrees: Double, origin: Vec2 = Vec2(0.0,0.0)): Vec2 {
         val p = this - origin

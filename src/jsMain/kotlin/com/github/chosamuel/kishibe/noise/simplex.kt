@@ -2,7 +2,8 @@ package com.github.chosamuel.kishibe.noise
 
 
 import com.github.chosamuel.kishibe.Drawer
+import com.github.chosamuel.kishibe.KISHIBE_NOISE
 
-fun Drawer.simplex(x: Double, y: Double):Double {
-    return n.random2D(x,y)
+fun simplex(x: Double, y: Double):Double {
+    return KISHIBE_NOISE.random2D(x,y)
 }
