@@ -74,20 +74,20 @@ class OpenSimplexNoise(seed: Long = 0L) {
         }
     }
 
-     fun random1D(x: Float): Float {
+    fun random1D(x: Float): Float {
         TODO("com.github.chosamuel.kishibe.noise.OpenSimplexNoise does not support 1D noise yet")
     }
 
-     fun random1D(x: Double): Double {
+    fun random1D(x: Double): Double {
         TODO("com.github.chosamuel.kishibe.noise.OpenSimplexNoise does not support 1D noise yet")
     }
 
-     fun random2D(x: Float, y: Float): Float {
+    fun random2D(x: Float, y: Float): Float {
         return random2D(x.toDouble(), y.toDouble()).toFloat()
     }
 
     //2D OpenSimplex Noise.
-     fun random2D(x: Double, y: Double): Double {
+    fun random2D(x: Double, y: Double): Double {
 
         //Place input coordinates onto grid.
         val stretchOffset = (x + y) * STRETCH_CONSTANT_2D
@@ -203,12 +203,12 @@ class OpenSimplexNoise(seed: Long = 0L) {
         return value / NORM_CONSTANT_2D
     }
 
-     fun random3D(x: Float, y: Float, z: Float): Float {
+    fun random3D(x: Float, y: Float, z: Float): Float {
         return random3D(x.toDouble(), y.toDouble(), z.toDouble()).toFloat()
     }
 
     //3D OpenSimplex Noise.
-     fun random3D(x: Double, y: Double, z: Double): Double {
+    fun random3D(x: Double, y: Double, z: Double): Double {
 
         //Place input coordinates on simplectic honeycomb.
         val stretchOffset = (x + y + z) * STRETCH_CONSTANT_3D
@@ -785,12 +785,12 @@ class OpenSimplexNoise(seed: Long = 0L) {
         return value / NORM_CONSTANT_3D
     }
 
-     fun random4D(x: Float, y: Float, z: Float, w: Float): Float {
+    fun random4D(x: Float, y: Float, z: Float, w: Float): Float {
         return random4D(x.toDouble(), y.toDouble(), z.toDouble(), w.toDouble()).toFloat()
     }
 
     //4D OpenSimplex Noise.
-     fun random4D(x: Double, y: Double, z: Double, w: Double): Double {
+    fun random4D(x: Double, y: Double, z: Double, w: Double): Double {
 
         //Place input coordinates on simplectic honeycomb.
         val stretchOffset = (x + y + z + w) * STRETCH_CONSTANT_4D
