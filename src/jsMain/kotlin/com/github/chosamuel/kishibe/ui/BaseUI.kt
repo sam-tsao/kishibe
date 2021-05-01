@@ -12,4 +12,8 @@ open class BaseUI {
         UI.setAttribute("height","${window.innerHeight}")
         UI.setAttribute("style","position: absolute;top:0;left:0;")
     }
+
+    fun appendToDocument(){
+        document.body?.appendChild(UI)
+    }
 }

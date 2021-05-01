@@ -1,6 +1,7 @@
 package com.github.chosamuel.kishibe.ui
 
 
+import com.github.chosamuel.kishibe.SVG.*
 import com.github.chosamuel.kishibe.svgns
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -25,22 +26,17 @@ class Radio(
             val btn = document.createElementNS(svgns, "rect") as SVGElement
             val btnx = leftPadding + (i * (btnWidth + paddingWidth))
             val id = "btn-${i+1}"
-            btn.setAttribute("width", "$btnWidth")
-            btn.setAttribute("id","$id")
+            btn.setWidth(btnWidth)
+            btn.setHeight(btnHeight)
+            btn.setID("$id")
             val defaultState = if(i==0) "active" else "inactive"
-            btn.classList.add(defaultState)
-            btn.classList.add("btn")
-            btn.setAttribute("height", "$btnHeight")
+            btn.addClasses(listOf("btn",defaultState))
             btn.setAttribute("x", "$btnx")
             btn.setAttribute("y", "$topPadding")
             btn.addEventListener("mousedown", {
-                //find current active button and deactivate
-                val activeBtn = document.querySelector(".active")
-                activeBtn?.classList?.remove("active")
-                activeBtn?.classList?.add("inactive")
-                //activate current button
-                btn.classList.remove("inactive")
-                btn.classList.add("active")
+                val activeBtn = document.querySelector(".active") as SVGElement
+                activeBtn.deactivate()
+                btn.activate()
                 mode = i
                 onClick()
             })
@@ -48,8 +44,15 @@ class Radio(
         }
         addCSSStyles()
     }
-    fun appendToDocument(){
-        document.body?.appendChild(UI)
+
+    fun SVGElement.deactivate(){
+        this.removeClass("active")
+        this.addClass("inactive")
+    }
+
+    fun SVGElement.activate(){
+        this.removeClass("inactive")
+        this.addClass("active")
     }
 
     fun addCSSStyles(){
