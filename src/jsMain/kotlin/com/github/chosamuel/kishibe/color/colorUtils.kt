@@ -1,4 +1,4 @@
-package com.github.chosamuel.kishibe
+package com.github.chosamuel.kishibe.color
 
 import kotlin.math.PI
 import kotlin.math.cos

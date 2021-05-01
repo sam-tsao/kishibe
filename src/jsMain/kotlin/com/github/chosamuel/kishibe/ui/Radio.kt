@@ -5,9 +5,8 @@ import com.github.chosamuel.kishibe.svgns
 import kotlinx.browser.document
 import kotlinx.browser.window
 
-class radio(val numBtns:Int = 3) {
+class Radio(val numBtns:Int = 3) : BaseUI(){
 
-    val UI = document.createElementNS(svgns,"svg")
     val btnWidth = 20
     val btnHeight = 20
     val paddingWidth = 30
@@ -18,9 +17,6 @@ class radio(val numBtns:Int = 3) {
     var onClick = {}
 
     init {
-        UI.setAttribute("width","${window.innerWidth}")
-        UI.setAttribute("height","${window.innerHeight}")
-        UI.setAttribute("style","position: absolute;top:0;left:0;")
         for(i in 0 until numBtns){
             val btn = document.createElementNS(svgns, "rect")
             val btnx = leftPadding + (i * (btnWidth + paddingWidth))
@@ -51,6 +47,8 @@ class radio(val numBtns:Int = 3) {
     fun appendToDocument(){
         document.body?.appendChild(UI)
     }
+
+    //optional
     fun setOnClick(func:()->Unit){
         onClick = func
     }

@@ -1,6 +1,5 @@
 package com.github.chosamuel.kishibe.math
 
-
 import com.github.chosamuel.kishibe.Drawer
 import kotlin.math.PI
 import kotlin.math.max

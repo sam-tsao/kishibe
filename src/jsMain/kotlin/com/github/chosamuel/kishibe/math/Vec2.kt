@@ -1,5 +1,6 @@
 package com.github.chosamuel.kishibe.math
 
+//BASED ON https://github.com/openrndr/openrndr/blob/master/openrndr-math/src/main/kotlin/org/openrndr/math/Vector2.kt
 
 import kotlin.math.cos
 import kotlin.math.sin

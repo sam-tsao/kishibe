@@ -1,25 +1,11 @@
 package com.github.chosamuel.kishibe
 
 
-import com.github.chosamuel.kishibe.math.Vec2
-import com.github.chosamuel.kishibe.noise.OpenSimplexNoise
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
 import org.w3c.dom.events.MouseEvent
-
-var frameCount = 0
-var mouseX: Double = 0.0
-var mouseY: Double = 0.0
-var pMouseX: Double = 0.0
-var pMouseY: Double = 0.0
-val pMouse: Vec2
-    get() = Vec2(pMouseX, pMouseY)
-val mouse: Vec2
-    get() = Vec2(mouseX, mouseY)
-val KISHIBE_NOISE = OpenSimplexNoise()
-
 
 fun Drawer(init: Drawer.() -> Unit) = Drawer().apply { init()}
 
@@ -40,13 +26,15 @@ class Drawer() {
     var strokeStyle = "black"
     var fillStyle = "white"
 
-    //GLOBAL VARIABLES
-
     //HOOKS
     var setupBlock ={}
     var drawLoop = {}
 
     init {
+        initWindowListeners()
+    }
+
+    fun initWindowListeners(){
         window.addEventListener("mousemove",{
             val event = it as MouseEvent
             pMouseX = mouseX
