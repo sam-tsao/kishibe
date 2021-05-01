@@ -7,6 +7,10 @@ import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.svg.SVGElement
 
+fun Radio(init: Radio.() -> Unit) = Radio().apply {
+    init()
+}
+
 class Radio(
     val numBtns:Int = 3,
     var btnWidth:Double = 20.0,

@@ -6,10 +6,12 @@ import kotlinx.browser.window
 
 open class BaseUI {
     val UI = document.createElementNS(svgns,"svg")
+    var width = window.innerWidth
+    var height = window.innerHeight
 
     init {
-        UI.setAttribute("width","${window.innerWidth}")
-        UI.setAttribute("height","${window.innerHeight}")
+        UI.setAttribute("width","${width}")
+        UI.setAttribute("height","${height}")
         UI.setAttribute("style","position: absolute;top:0;left:0;")
     }
 
