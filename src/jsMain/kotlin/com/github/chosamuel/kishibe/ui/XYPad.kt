@@ -1,12 +1,13 @@
 package com.github.chosamuel.kishibe.ui
 
-import com.github.chosamuel.kishibe.SVG.lineSVG
-import com.github.chosamuel.kishibe.SVG.setLinePoints
-import com.github.chosamuel.kishibe.SVG.setStroke
-import com.github.chosamuel.kishibe.SVG.setStrokeWidth
+
 import com.github.chosamuel.kishibe.math.map
 import com.github.chosamuel.kishibe.mouseX
 import com.github.chosamuel.kishibe.mouseY
+import com.github.chosamuel.kishibe.svg.lineSVG
+import com.github.chosamuel.kishibe.svg.setLinePoints
+import com.github.chosamuel.kishibe.svg.setStroke
+import com.github.chosamuel.kishibe.svg.setStrokeWidth
 import com.github.chosamuel.kishibe.svgns
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -22,8 +23,8 @@ class XYPad() : BaseUI() {
     val xEnd = width - lengthPadding
     val yStart = lengthPadding
     val yEnd = height - lengthPadding
-    var easedMouseX = 0.0
-    var easedMouseY = 0.0
+    var easedMouseX = 0.5
+    var easedMouseY = 0.5
     var dx = 0.0
     var dy = 0.0
     var xPos = 0.0
@@ -33,8 +34,8 @@ class XYPad() : BaseUI() {
     var ySlider: SVGElement
     var lineRadius = 3
     var lineStrokeWidth = 10.0
-    var x = 0.0
-    var y = 0.0
+    var x = 0.5
+    var y = 0.5
 
     init {
         val yBar = lineSVG(heightPadding,lengthPadding,heightPadding,height-lengthPadding)

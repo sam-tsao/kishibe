@@ -5,7 +5,10 @@ import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.CanvasRenderingContext2D
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.TouchEvent
+import org.w3c.dom.events.Event
 import org.w3c.dom.events.MouseEvent
+import org.w3c.dom.get
 
 fun Drawer(init: Drawer.() -> Unit) = Drawer().apply { init()}
 
@@ -30,19 +33,33 @@ class Drawer() {
     var setupBlock ={}
     var drawLoop = {}
 
-    init {
-        initWindowListeners()
+    var onClick = {
     }
 
-    fun initWindowListeners(){
+    var onRelease = {}
+
+    init {
+        initListeners()
+    }
+
+    fun initListeners(){
         window.addEventListener("mousemove",{
             val event = it as MouseEvent
-            pMouseX = mouseX
-            pMouseY = mouseY
             mouseX = event.clientX * 1.0
             mouseY = event.clientY * 1.0
         })
+        canvas.addEventListener("mousedown", { onClick() })
+        canvas.addEventListener("touchstart", {
+            val event = it as TouchEvent
+            mouseX = event.touches.get(0)!!.clientX * 1.0
+            mouseY = event.touches.get(0)!!.clientY * 1.0
+            onClick()
+        })
+
+        canvas.addEventListener("mouseup", { onRelease()})
+        canvas.addEventListener("touchend", { onRelease()})
     }
+
 
     fun attach(){
         canvas.setAttribute("width","$width")

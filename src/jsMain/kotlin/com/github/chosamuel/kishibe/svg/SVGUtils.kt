@@ -1,10 +1,8 @@
-package com.github.chosamuel.kishibe.SVG
+package com.github.chosamuel.kishibe.svg
 
 import com.github.chosamuel.kishibe.svgns
 import kotlinx.browser.document
 import org.w3c.dom.svg.SVGElement
-import org.w3c.dom.svg.SVGLineElement
-import kotlin.math.abs
 
 fun SVGElement.setWidth(width: Double) {
     this.setAttribute("width", "$width")
