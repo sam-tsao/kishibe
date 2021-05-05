@@ -17,7 +17,7 @@ class Drawer() {
     var width: Int = window.innerWidth
     var height: Int = window.innerHeight
     val canvas = document.createElement("canvas") as HTMLCanvasElement
-    val ctx = canvas.getContext("2d") as CanvasRenderingContext2D
+    val ctx = canvas.getContext("2d", "alpha: false") as CanvasRenderingContext2D
 
     //INIT VARIABLES
     var setupDone = false

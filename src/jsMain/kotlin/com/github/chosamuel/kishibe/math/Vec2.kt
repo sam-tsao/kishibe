@@ -3,6 +3,7 @@ package com.github.chosamuel.kishibe.math
 //BASED ON https://github.com/openrndr/openrndr/blob/master/openrndr-math/src/main/kotlin/org/openrndr/math/Vector2.kt
 
 import kotlin.math.cos
+import kotlin.math.floor
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -15,6 +16,9 @@ class Vec2(var x: Double = 0.0, var y: Double = 0.0) {
 
     val squaredLength: Double
         get() = x * x + y * y
+
+    val floored: Vec2
+        get() = Vec2(floor(x),floor(y))
 
     val normalized: Vec2
         get() {
