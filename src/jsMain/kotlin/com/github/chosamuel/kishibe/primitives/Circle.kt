@@ -8,6 +8,12 @@ import com.github.chosamuel.kishibe.setStyle
 
 data class Circle(val center: Vec2, val radius: Double) {
     constructor(x: Double, y: Double, radius: Double) : this(Vec2(x, y), radius)
+
+    fun intersects(other: Circle): Boolean {
+        val d = this.center.distanceTo(other.center)
+        return d < (this.radius + other.radius)
+    }
+
 }
 
 fun Drawer.circle(c: Circle){
