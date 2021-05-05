@@ -10,6 +10,7 @@ import com.github.chosamuel.kishibe.svg.setID
 import com.github.chosamuel.kishibe.svg.setWidth
 import com.github.chosamuel.kishibe.svgns
 import org.w3c.dom.svg.SVGElement
+import kotlin.math.ceil
 
 fun Radio(init: Radio.() -> Unit) = Radio().apply {
     init()
@@ -30,6 +31,7 @@ class Radio(
     var onClick = {}
 
     init {
+
         for(i in 0 until numBtns){
             val btn = document.createElementNS(svgns, "rect") as SVGElement
             val btnx = leftPadding + (i * (btnWidth + paddingWidth))
