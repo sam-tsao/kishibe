@@ -1,10 +1,14 @@
 package com.github.chosamuel.kishibe.ui
 
-
-import com.github.chosamuel.kishibe.SVG.*
-import com.github.chosamuel.kishibe.svgns
 import kotlinx.browser.document
 import kotlinx.browser.window
+import com.github.chosamuel.kishibe.svg.addClasses
+import com.github.chosamuel.kishibe.svg.addClass
+import com.github.chosamuel.kishibe.svg.removeClass
+import com.github.chosamuel.kishibe.svg.setHeight
+import com.github.chosamuel.kishibe.svg.setID
+import com.github.chosamuel.kishibe.svg.setWidth
+import com.github.chosamuel.kishibe.svgns
 import org.w3c.dom.svg.SVGElement
 
 fun Radio(init: Radio.() -> Unit) = Radio().apply {
@@ -12,7 +16,7 @@ fun Radio(init: Radio.() -> Unit) = Radio().apply {
 }
 
 class Radio(
-    val numBtns:Int = 3,
+    var numBtns:Int = 3,
     var btnWidth:Double = 20.0,
     var btnHeight:Double = 20.0,
     var paddingWidth:Double = 30.0,
@@ -87,5 +91,4 @@ class Radio(
     fun setOnClick(func:()->Unit){
         onClick = func
     }
-
 }
