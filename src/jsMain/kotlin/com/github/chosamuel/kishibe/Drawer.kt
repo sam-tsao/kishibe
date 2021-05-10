@@ -49,6 +49,11 @@ class Drawer() {
             mouseY = event.clientY * 1.0
         })
         canvas.addEventListener("mousedown", { onClick() })
+        window.addEventListener("touchmove", {
+            val event = it as TouchEvent
+            mouseX = event.touches.get(0)!!.clientX * 1.0
+            mouseY = event.touches.get(0)!!.clientY * 1.0
+        })
         window.addEventListener("touchstart", {
             val event = it as TouchEvent
             mouseX = event.touches.get(0)!!.clientX * 1.0
