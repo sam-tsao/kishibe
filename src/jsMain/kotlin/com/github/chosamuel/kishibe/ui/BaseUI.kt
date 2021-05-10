@@ -1,6 +1,6 @@
 package com.github.chosamuel.kishibe.ui
 
-import com.github.chosamuel.kishibe.svgns
+import com.github.chosamuel.kishibe.svg.svgns
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.svg.SVGElement
@@ -15,7 +15,7 @@ open class BaseUI {
         UI.setAttribute("width","${width}")
         UI.setAttribute("height","${height}")
         UI.setAttribute("style","position: absolute;top:0;left:0;")
-        /*
+        /**
         UI currently blocks out canvas mouse events because it is full sized.
         So adding event listeners to the SVG block itself is a hack for now.
         Need to declare onclick lambda in drawer class for the UI.

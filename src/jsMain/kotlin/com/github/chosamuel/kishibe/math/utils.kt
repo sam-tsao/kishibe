@@ -1,6 +1,5 @@
 package com.github.chosamuel.kishibe.math
 
-import com.github.chosamuel.kishibe.Drawer
 import kotlin.math.PI
 import kotlin.math.max
 import kotlin.math.min
@@ -34,7 +33,3 @@ fun map(beforeLeft: Double, beforeRight: Double,
 }
 
 fun saturate(x: Double) = max(0.0, min(1.0, x))
-
-fun Drawer.randomPos():Vector2 {
-    return Vec2(Random.nextDouble(width*1.0),Random.nextDouble(height*1.0))
-}

@@ -1,14 +1,10 @@
 package com.github.chosamuel.kishibe.ui
 
 
+import com.github.chosamuel.kishibe.application.mouseX
+import com.github.chosamuel.kishibe.application.mouseY
 import com.github.chosamuel.kishibe.math.map
-import com.github.chosamuel.kishibe.mouseX
-import com.github.chosamuel.kishibe.mouseY
-import com.github.chosamuel.kishibe.svg.lineSVG
-import com.github.chosamuel.kishibe.svg.setLinePoints
-import com.github.chosamuel.kishibe.svg.setStroke
-import com.github.chosamuel.kishibe.svg.setStrokeWidth
-import com.github.chosamuel.kishibe.svgns
+import com.github.chosamuel.kishibe.svg.*
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.svg.SVGElement
