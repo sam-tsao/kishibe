@@ -1,8 +1,8 @@
 package com.github.chosamuel.kishibe.primitives
 
-import com.github.chosamuel.kishibe.math.Vec2
+import com.github.chosamuel.kishibe.math.Vector2
 
-data class LineSegment(val start: Vec2, val end: Vec2) {
+data class LineSegment(val start: Vector2, val end: Vector2) {
     constructor(x0: Double, y0: Double, x1: Double, y1: Double) :
-            this(Vec2(x0, y0), Vec2(x1, y1))
+            this(Vector2(x0, y0), Vector2(x1, y1))
 }

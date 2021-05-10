@@ -1,14 +1,8 @@
 package com.github.chosamuel.kishibe.ui
 
+import com.github.chosamuel.kishibe.svg.*
 import kotlinx.browser.document
 import kotlinx.browser.window
-import com.github.chosamuel.kishibe.svg.addClasses
-import com.github.chosamuel.kishibe.svg.addClass
-import com.github.chosamuel.kishibe.svg.removeClass
-import com.github.chosamuel.kishibe.svg.setHeight
-import com.github.chosamuel.kishibe.svg.setID
-import com.github.chosamuel.kishibe.svg.setWidth
-import com.github.chosamuel.kishibe.svgns
 import org.w3c.dom.svg.SVGElement
 import kotlin.math.ceil
 

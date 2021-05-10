@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.chosamuel"
-version = "0.1.0"
+version = "0.2.0"
 
 repositories {
     mavenCentral()
@@ -23,6 +23,5 @@ kotlin {
 
     sourceSets {
        val jsMain by getting
-        val jsTest by getting
     }
 }

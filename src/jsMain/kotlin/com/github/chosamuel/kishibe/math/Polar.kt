@@ -9,7 +9,7 @@ data class Polar(val theta: Double, val radius: Double = 1.0){
 
     companion object {
         /** Constructs equivalent polar coordinates from the Cartesian coordinate system. */
-        fun fromVector(vector: Vec2): Polar {
+        fun fromVector(vector: Vector2): Polar {
             val r = vector.length
             return Polar(
                 if (r == 0.0) 0.0 else atan2(vector.y, vector.x).asDegrees,
@@ -19,12 +19,12 @@ data class Polar(val theta: Double, val radius: Double = 1.0){
     }
 
     /** Constructs equivalent Cartesian coordinates from the polar representation. */
-    val cartesian: Vec2
+    val cartesian: Vector2
         get() {
             val theta = theta.asRadians
             val x = cos(theta)
             val y = sin(theta)
-            return Vec2(x, y) * radius
+            return Vector2(x, y) * radius
         }
 
     operator fun plus(s: Polar) = Polar(theta + s.theta, radius + s.radius)

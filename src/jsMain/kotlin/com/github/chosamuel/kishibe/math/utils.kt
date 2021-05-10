@@ -4,7 +4,6 @@ import com.github.chosamuel.kishibe.Drawer
 import kotlin.math.PI
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.random.Random
 
 val Double.asRadians: Double
     get() = this / 360.0 * (PI*2.0)
@@ -36,6 +35,6 @@ fun map(beforeLeft: Double, beforeRight: Double,
 
 fun saturate(x: Double) = max(0.0, min(1.0, x))
 
-fun Drawer.randomPos():Vec2 {
+fun Drawer.randomPos():Vector2 {
     return Vec2(Random.nextDouble(width*1.0),Random.nextDouble(height*1.0))
 }

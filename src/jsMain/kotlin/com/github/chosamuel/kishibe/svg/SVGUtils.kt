@@ -1,8 +1,9 @@
 package com.github.chosamuel.kishibe.svg
 
-import com.github.chosamuel.kishibe.svgns
 import kotlinx.browser.document
 import org.w3c.dom.svg.SVGElement
+
+const val svgns = "http://www.w3.org/2000/svg";
 
 fun SVGElement.setWidth(width: Double) {
     this.setAttribute("width", "$width")
