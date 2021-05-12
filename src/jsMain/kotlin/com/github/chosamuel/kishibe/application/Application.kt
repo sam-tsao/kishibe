@@ -7,6 +7,9 @@ import kotlinx.browser.window
 import org.khronos.webgl.WebGLContextAttributes
 import org.khronos.webgl.WebGLRenderingContext as GL
 import org.w3c.dom.HTMLCanvasElement
+import org.w3c.dom.TouchEvent
+import org.w3c.dom.events.MouseEvent
+import org.w3c.dom.get
 
 fun Application(init: Application.()->Unit) = Application().apply { init() }
 
@@ -35,6 +38,7 @@ class Application {
         canvas.height =  window.innerHeight
         document.body?.appendChild(canvas)
         defaultShader.use()
+        initListeners()
         renderScene()
     }
 
@@ -42,6 +46,29 @@ class Application {
 
     fun draw(fn: ()->Unit){
         drawFunction = fn
+    }
+
+    var onClick = {
+    }
+
+    var onRelease = {}
+
+    fun initListeners(){
+        window.addEventListener("mousemove",{
+            val event = it as MouseEvent
+            mouseX = event.clientX * 1.0
+            mouseY = event.clientY * 1.0
+        })
+        canvas.addEventListener("mousedown", { onClick() })
+        window.addEventListener("touchstart", {
+            val event = it as TouchEvent
+            mouseX = event.touches.get(0)!!.clientX * 1.0
+            mouseY = event.touches.get(0)!!.clientY * 1.0
+        })
+        canvas.addEventListener("touchstart",{onClick()})
+
+        canvas.addEventListener("mouseup", { onRelease()})
+        canvas.addEventListener("touchend", { onRelease()})
     }
 
 
