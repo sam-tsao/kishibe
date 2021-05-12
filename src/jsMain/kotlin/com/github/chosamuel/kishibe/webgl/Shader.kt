@@ -8,44 +8,44 @@ import org.khronos.webgl.WebGLRenderingContext as GL
 import org.khronos.webgl.WebGLShader
 
 class Shader(
-    val glContext: GL,
     val app: Application
 ) {
     private var vertexShader = setupShaderFromSource(GL.VERTEX_SHADER,
         """
                 attribute vec4 position;
+                attribute vec4 v_color;
+                
                 uniform vec2 resolution;
                 uniform vec4 color;
-                varying vec4 v_color;
+                uniform mat4 matrix;
+                
+                varying vec4 vertex_color;
 
                 void main() {
                 
-                  vec2 zeroToOne = position.xy / resolution;
-                  vec2 zeroToTwo = zeroToOne * 2.0;
-                  vec2 clipSpace = zeroToTwo - 1.0;
-                  gl_Position = vec4(clipSpace * vec2(1,-1), 0, 1);
-                  v_color = color;
+                  gl_Position = matrix * position;
+                  vertex_color = v_color;
                 } 
                 """)
 
     private var fragmentShader = setupShaderFromSource(GL.FRAGMENT_SHADER,
         """
                          precision highp float;
-                         varying vec4 v_color;
+                         varying vec4 vertex_color;
                          
                          void main() {
-                           gl_FragColor = v_color;
+                           gl_FragColor = vertex_color;
                          }
                         """
     )
     var program = linkProgram()
 
     fun linkProgram(): WebGLProgram? {
-        val program = glContext.createProgram()
-        glContext.attachShader(program, vertexShader)
-        glContext.attachShader(program, fragmentShader)
-        glContext.linkProgram(program)
-        val success = glContext.getProgramParameter(program, org.khronos.webgl.WebGLRenderingContext.LINK_STATUS) as Boolean
+        val program = app.gl.createProgram()
+        app.gl.attachShader(program, vertexShader)
+        app.gl.attachShader(program, fragmentShader)
+        app.gl.linkProgram(program)
+        val success = app.gl.getProgramParameter(program, org.khronos.webgl.WebGLRenderingContext.LINK_STATUS) as Boolean
         if(!success){
             console.log("failed to create shader program")
         }
@@ -53,13 +53,13 @@ class Shader(
     }
 
     fun setupShaderFromSource(shaderType: Int, shaderSource: String):WebGLShader?{
-        val shader = glContext.createShader(shaderType)
-        glContext.shaderSource(shader, shaderSource)
-        glContext.compileShader(shader)
-        val success = glContext.getShaderParameter(shader, GL.COMPILE_STATUS) as Boolean
+        val shader = app.gl.createShader(shaderType)
+        app.gl.shaderSource(shader, shaderSource)
+        app.gl.compileShader(shader)
+        val success = app.gl.getShaderParameter(shader, GL.COMPILE_STATUS) as Boolean
         if(!success){
             console.log("Failed to compile shader")
-            console.log(glContext.getShaderInfoLog(shader))
+            console.log(app.gl.getShaderInfoLog(shader))
         }
 
         when(shaderType){
@@ -71,22 +71,34 @@ class Shader(
     }
 
     fun bindDefaults(){
-        glContext.uniform2f(
+        app.gl.uniform2f(
             app.resolutionUniformLocation,
             app.getWidth().toFloat(),
             app.getHeight().toFloat()
         )
-        glContext.uniform4f(app.colorUniformLocation,
+        app.gl.uniform4f(app.colorUniformLocation,
             app.fillColor.r.toFloat(),
             app.fillColor.g.toFloat(),
             app.fillColor.b.toFloat(),
             app.fillColor.a.toFloat()
         )
-        glContext.viewport(0,0,glContext.canvas.width,glContext.canvas.height)
+        //matrix
+        //TODO Refactor matrix
+        val w = app.getWidth().toFloat()
+        val h = app.getHeight().toFloat()
+        val d = 400f
+        val matrix = arrayOf(
+            2f / w, 0f, 0f, 0f,
+            0f, -2f/ h, 0f, 0f,
+            0f, 0f, 2f / d, 0f,
+            -1f,  1f,  0f,  1f
+        )
+        app.gl.uniformMatrix4fv(app.matrixLocation,false, matrix)
+        app.gl.viewport(0,0,app.gl.canvas.width,app.gl.canvas.height)
     }
 
     fun use(){
-        glContext.useProgram(program)
+        app.gl.useProgram(program)
         bindDefaults()
     }
 

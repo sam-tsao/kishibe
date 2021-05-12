@@ -7,6 +7,8 @@ import com.github.chosamuel.kishibe.math.Vector2
 import com.github.chosamuel.kishibe.webgl.VertexBuffer
 import org.khronos.webgl.WebGLRenderingContext as GL
 
+//todo reimplement with mesh
+
 fun Application.triangle(
     x1:Double,
     y1:Double,

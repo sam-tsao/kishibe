@@ -8,8 +8,11 @@ class VertexBuffer(val glContext: GL) {
     val vertices = mutableListOf<Vector2>()
     private var positionBuffer = glContext.createBuffer()
 
-    fun addVertex(v: Vector2){
-        vertices.add(v)
+    fun addVertex(v: Vector2) = vertices.add(v)
+    fun addVertices(l: List<Vector2>){
+        l.forEach {
+            vertices.add(it)
+        }
     }
 
     fun numVertices():Int = vertices.size
@@ -37,7 +40,6 @@ class VertexBuffer(val glContext: GL) {
         glContext.drawArrays(glPrimitiveMode,0,numVertices())
     }
 
-    fun unbind(){
-        glContext.deleteBuffer(positionBuffer)
-    }
+    fun unbind() = glContext.deleteBuffer(positionBuffer)
+
 }
