@@ -19,6 +19,7 @@ class Application {
     val canvas = document.createElement("canvas") as HTMLCanvasElement
     val gl = canvas.getContext("webgl") as GL
     val defaultShader = Shader( this)
+    var isSetup = true
     var frameCount = 0
     var timer = Timer()
 
@@ -29,6 +30,7 @@ class Application {
     val matrixLocation = gl.getUniformLocation(defaultShader.program, "matrix")
 
     var drawFunction = {}
+    var setupFunction = {}
 
     //STYLES
     var fillColor = Color(1.0,1.0,1.0,1.0)
@@ -46,6 +48,10 @@ class Application {
 
     fun draw(fn: ()->Unit){
         drawFunction = fn
+    }
+    fun setup(fn: ()->Unit){
+        setupFunction = fn
+        isSetup = false
     }
 
     var onClick = {
@@ -73,6 +79,10 @@ class Application {
 
 
     fun renderScene() {
+        if(!isSetup){
+            setupFunction()
+            isSetup = true
+        }
         draw()
         frameCount++
         window.requestAnimationFrame {

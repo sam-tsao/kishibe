@@ -30,4 +30,7 @@ fun Application.circle(
     }
     m.draw(GL.TRIANGLE_FAN)
 }
-//TODO Add overloads
+
+fun Application.circle(center: Vector2, r: Double, resolution: Int = 120){
+    circle(center.x,center.y,r,resolution)
+}
