@@ -2,16 +2,17 @@ package com.github.chosamuel.kishibe.webgl
 
 import com.github.chosamuel.kishibe.application.Application
 import com.github.chosamuel.kishibe.math.Vector2
+import com.github.chosamuel.kishibe.math.Vector3
 import org.khronos.webgl.WebGLRenderingContext as GL
 
 class VertexBuffer(val glContext: GL) {
-    val vertices = mutableListOf<Vector2>()
+    val vertices = mutableListOf<Vector3>()
     private var positionBuffer = glContext.createBuffer()
 
-    fun addVertex(v: Vector2) = vertices.add(v)
+    fun addVertex(v: Vector2) = vertices.add(Vector3(v.x,v.y,0.0))
     fun addVertices(l: List<Vector2>){
         l.forEach {
-            vertices.add(it)
+            vertices.add(Vector3(it.x,it.y,0.0))
         }
     }
 
@@ -28,7 +29,7 @@ class VertexBuffer(val glContext: GL) {
         glContext.enableVertexAttribArray(app.positionAttributeLocation)
         glContext.vertexAttribPointer(
             app.positionAttributeLocation,
-            2,
+            3,
             GL.FLOAT,
             false,
             0,
