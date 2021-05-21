@@ -54,27 +54,51 @@ class Application {
         isSetup = false
     }
 
-    var onClick = {
-    }
-
+    var onClick = {}
+    var onDragged = {}
     var onRelease = {}
+    var mouseClicked = false
 
     fun initListeners(){
         window.addEventListener("mousemove",{
             val event = it as MouseEvent
             mouseX = event.clientX * 1.0
             mouseY = event.clientY * 1.0
+            if(mouseClicked){ onDragged() }
         })
-        canvas.addEventListener("mousedown", { onClick() })
-        window.addEventListener("touchstart", {
+
+        canvas.addEventListener("mousedown", {
+            mouseClicked = true
+            onClick()
+        })
+
+        window.addEventListener("touchmove", {
             val event = it as TouchEvent
             mouseX = event.touches.get(0)!!.clientX * 1.0
             mouseY = event.touches.get(0)!!.clientY * 1.0
+            if(mouseClicked){ onDragged() }
         })
-        canvas.addEventListener("touchstart",{onClick()})
 
-        canvas.addEventListener("mouseup", { onRelease()})
-        canvas.addEventListener("touchend", { onRelease()})
+        canvas.addEventListener("touchstart",{
+            val event = it as TouchEvent
+            mouseX = event.touches.get(0)!!.clientX * 1.0
+            mouseY = event.touches.get(0)!!.clientY * 1.0
+            onClick()
+            mouseClicked = true
+        })
+
+        canvas.addEventListener("mouseup", {
+            mouseClicked = false
+            onRelease()
+        })
+        canvas.addEventListener("touchend", {
+            mouseClicked = false
+            onRelease()
+        })
+        canvas.addEventListener("touchcancel", {
+            mouseClicked = false
+            onRelease()
+        })
     }
 
 
