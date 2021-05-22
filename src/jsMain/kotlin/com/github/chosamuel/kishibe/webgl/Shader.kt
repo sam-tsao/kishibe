@@ -8,37 +8,37 @@ import org.khronos.webgl.WebGLRenderingContext as GL
 import org.khronos.webgl.WebGLShader
 
 class Shader(
-    val app: Application
+    val app: Application,
+    val vsSource: String = """
+        attribute vec4 position;
+        attribute vec4 v_color;
+        
+        uniform vec2 resolution;
+        uniform vec4 color;
+        uniform mat4 matrix;
+        
+        varying vec4 vertex_color;
+
+        void main() {
+        
+          gl_Position = matrix * position;
+          vertex_color = v_color;
+        } 
+    """,
+    val fsSource: String = """
+        precision highp float;
+        varying vec4 vertex_color;
+        
+        void main() {
+          gl_FragColor = vertex_color;
+        }
+    """,
 ) {
-    private var vertexShader = setupShaderFromSource(GL.VERTEX_SHADER,
-        """
-                attribute vec4 position;
-                attribute vec4 v_color;
-                
-                uniform vec2 resolution;
-                uniform vec4 color;
-                uniform mat4 matrix;
-                
-                varying vec4 vertex_color;
+    private var vertexShader = setupShaderFromSource(GL.VERTEX_SHADER,vsSource)
 
-                void main() {
-                
-                  gl_Position = matrix * position;
-                  vertex_color = v_color;
-                } 
-                """)
-
-    private var fragmentShader = setupShaderFromSource(GL.FRAGMENT_SHADER,
-        """
-                         precision highp float;
-                         varying vec4 vertex_color;
-                         
-                         void main() {
-                           gl_FragColor = vertex_color;
-                         }
-                        """
-    )
+    private var fragmentShader = setupShaderFromSource(GL.FRAGMENT_SHADER,fsSource)
     var program = linkProgram()
+
 
     fun linkProgram(): WebGLProgram? {
         val program = app.gl.createProgram()

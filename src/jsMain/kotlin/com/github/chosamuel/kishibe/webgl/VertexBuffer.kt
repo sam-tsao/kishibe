@@ -4,6 +4,9 @@ import com.github.chosamuel.kishibe.application.Application
 import com.github.chosamuel.kishibe.math.Vector2
 import com.github.chosamuel.kishibe.math.Vector3
 import org.khronos.webgl.WebGLRenderingContext as GL
+import org.khronos.webgl.Float32Array
+import org.khronos.webgl.Uint16Array
+import org.khronos.webgl.set
 
 class VertexBuffer(val glContext: GL) {
     val vertices = mutableListOf<Vector3>()
@@ -21,6 +24,23 @@ class VertexBuffer(val glContext: GL) {
     fun bind(app: Application){
         //CREATE DATA
         val positions = Float32Array(vertices)
+
+        val vertexIds = Float32Array(numVertices());
+        for(i in 0 until numVertices()){
+            vertexIds[i] = i.toFloat()
+        }
+        val idBuffer = glContext.createBuffer();
+        glContext.bindBuffer(GL.ARRAY_BUFFER, idBuffer);
+        glContext.bufferData(GL.ARRAY_BUFFER, vertexIds, GL.STATIC_DRAW);
+        glContext.vertexAttribPointer(
+            app.vertexIDLocation,
+            1,
+            GL.FLOAT,
+            false,
+            0,
+            0
+        )
+        glContext.enableVertexAttribArray(app.vertexIDLocation)
 
         //BIND DATA
         positionBuffer = glContext.createBuffer()

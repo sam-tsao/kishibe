@@ -10,6 +10,7 @@ open class BaseUI {
     var width = window.innerWidth
     var height = window.innerHeight
     var onClickOuter = {}
+    var onReleaseOuter = {}
 
     init {
         UI.setAttribute("width","${width}")
@@ -32,6 +33,30 @@ open class BaseUI {
             val tgt = it.target as SVGElement
             if(!tgt.classList.contains("btn")){
                 onClickOuter()
+            }
+        })
+        UI.addEventListener("mouseup",{
+            val tgt = it.target as SVGElement
+            if(!tgt.classList.contains("btn")){
+                onReleaseOuter()
+            }
+        })
+        UI.addEventListener("mouseleave",{
+            val tgt = it.target as SVGElement
+            if(!tgt.classList.contains("btn")){
+                onReleaseOuter()
+            }
+        })
+        UI.addEventListener("touchend",{
+            val tgt = it.target as SVGElement
+            if(!tgt.classList.contains("btn")){
+                onReleaseOuter()
+            }
+        })
+        UI.addEventListener("touchcancel",{
+            val tgt = it.target as SVGElement
+            if(!tgt.classList.contains("btn")){
+                onReleaseOuter()
             }
         })
     }
