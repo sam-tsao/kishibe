@@ -1,78 +1,85 @@
 package com.github.chosamuel.kishibe.ui
 
-import com.github.chosamuel.kishibe.svg.*
+import com.github.chosamuel.kishibe.application.renderer.Color
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.w3c.dom.svg.SVGElement
-import kotlin.math.ceil
+import kotlinx.dom.addClass
+import kotlinx.dom.removeClass
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.fetch.Body
 
-fun Radio(init: Radio.() -> Unit) = Radio().apply {
-    init()
-}
 
 class Radio(
-    var numBtns:Int = 3,
-    var btnWidth:Double = 20.0,
-    var btnHeight:Double = 20.0,
-    var paddingWidth:Double = 30.0,
-    var topPadding:Double = (window.innerHeight - (btnHeight*2.0))
-
-) : BaseUI(){
-
-    val UIWidth = numBtns * btnWidth + (numBtns-1) * paddingWidth
-    val leftPadding = (window.innerWidth - UIWidth) * 0.5
+    val numBtns: Int = 3
+) {
+    val btnSize: Int = 25
+    val btnSpacing: Int = 30
+    val radioWidth = (btnSize * numBtns) + (btnSpacing * (numBtns - 1))
+    var activeColor = Color(0.8,0.8,0.8,0.8)
+    var inactiveColor = Color(0.8,0.8,0.8,0.3)
     var mode = 0
     var onClick = {}
 
-    init {
-
-        for(i in 0 until numBtns){
-            val btn = document.createElementNS(svgns, "rect") as SVGElement
-            val btnx = leftPadding + (i * (btnWidth + paddingWidth))
-            val id = "btn-${i+1}"
-            btn.setWidth(btnWidth)
-            btn.setHeight(btnHeight)
-            btn.setID("$id")
+    fun attach(){
+        console.log("new radio")
+        val container = document.createElement("div")
+        container.classList.add("radio-container")
+        val leftPadding = calcLeftPadding()
+        val topPadding = calcTopPadding()
+        container.setAttribute("style","""
+            width: ${radioWidth}px;
+            height: ${btnSize}px;
+            left: ${leftPadding}px;
+            top: ${topPadding}px;
+            position: fixed;
+            display: flex;
+            justify-content: space-between;
+        """)
+        //CREATE BUTTONS
+        repeat(numBtns){ i->
+            val btn = document.createElement("div")
+            btn.classList.add("btn")
+            btn.setAttribute("style","""
+                width: ${btnSize}px;
+                height: ${btnSize}px;
+            """)
             val defaultState = if(i==0) "active" else "inactive"
-            btn.addClasses(listOf("btn",defaultState))
-            btn.setAttribute("x", "$btnx")
-            btn.setAttribute("y", "$topPadding")
+            btn.addClass(defaultState)
             btn.addEventListener("mousedown", {
-                val activeBtn = document.querySelector(".active") as SVGElement
-                activeBtn.deactivate()
+                val activeBtn = document.querySelector(".active")
+                activeBtn?.deactivate()
                 btn.activate()
                 mode = i
                 onClick()
             })
-            UI.appendChild(btn)
+            container.appendChild(btn)
         }
         addCSSStyles()
+        document.body?.appendChild(container)
     }
-
-    fun SVGElement.deactivate(){
+    fun Element.deactivate(){
         this.removeClass("active")
         this.addClass("inactive")
     }
 
-    fun SVGElement.activate(){
+    fun Element.activate(){
         this.removeClass("inactive")
         this.addClass("active")
     }
-
     fun addCSSStyles(){
         val styles = """
-                
             .active {
-                fill: rgba(211,211,211,0.8);
+                background-color: ${colorToCSSString(activeColor)};
             }
             .inactive {
-                fill: rgba(211,211,211,0.3);
+                background-color: ${colorToCSSString(inactiveColor)};
             }
             .btn {
                 transition: 0.2s;
             }
             .btn:hover {
-                fill: rgba(211,211,211,0.8);
+                background-color: ${colorToCSSString(activeColor)};
             }
             
             """
@@ -82,9 +89,13 @@ class Radio(
         styleSheet.innerHTML += styles
         document.head?.appendChild(styleSheet)
     }
+    fun colorToCSSString(c: Color): String = "rgba(${c.r*255},${c.g*255},${c.b*255},${c.a})"
 
-    //optional
-    fun setOnClick(func:()->Unit){
-        onClick = func
+    fun calcLeftPadding(): Double{
+        return (window.innerWidth - radioWidth) / 2.0
+    }
+
+    fun calcTopPadding(): Double {
+        return window.innerHeight * 0.95
     }
 }
