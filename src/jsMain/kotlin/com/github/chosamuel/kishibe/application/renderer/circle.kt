@@ -2,6 +2,7 @@ package com.github.chosamuel.kishibe.application.renderer
 
 import com.github.chosamuel.kishibe.application.Application
 import com.github.chosamuel.kishibe.graphics.Mesh
+import com.github.chosamuel.kishibe.graphics.createMesh
 import com.github.chosamuel.kishibe.math.Vector2
 import org.khronos.webgl.WebGLRenderingContext as GL
 import kotlin.math.PI
@@ -14,7 +15,7 @@ fun Application.circle(
     r: Double,
     resolution: Int = 120
 ){
-    val m = Mesh(gl,this)
+    val m = createMesh()
     m.addVertex(Vector2(x,y))
     m.addColor(fillColor)
     m.addIndex(0)

@@ -6,17 +6,18 @@ import com.github.chosamuel.kishibe.math.Vector2
 import com.github.chosamuel.kishibe.webgl.ColorBuffer
 import com.github.chosamuel.kishibe.webgl.IndexBuffer
 import com.github.chosamuel.kishibe.webgl.VertexBuffer
-import org.khronos.webgl.WebGLRenderingContext as GL
+
+fun Application.createMesh():Mesh = Mesh(this)
 
 /**
  * A basic mesh class for
  * creaing models.
  */
-class Mesh(val glContext: GL, val app: Application) {
+class Mesh(val app: Application) {
 
-    var vBuffer =  VertexBuffer(glContext)
-    var cBuffer =  ColorBuffer(glContext)
-    var iBuffer =  IndexBuffer(glContext)
+    var vBuffer =  VertexBuffer(app.gl)
+    var cBuffer =  ColorBuffer(app.gl)
+    var iBuffer =  IndexBuffer(app.gl)
 
     fun addVertex(v: Vector2) = vBuffer.addVertex(v)
     fun addColor(c: Color) = cBuffer.addColor(c)
