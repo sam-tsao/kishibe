@@ -117,5 +117,16 @@ class Shader(
         app.gl.useProgram(program)
         bindDefaults()
     }
+    fun setUniform2f(name: String, f1: Float, f2: Float){
+        app.gl.uniform2f(
+            app.gl.getUniformLocation(program, name),
+            f1,
+            f2
+        )
+    }
+
+    fun setUniform1f(name: String, float: Float){
+        app.gl.uniform1f(app.gl.getUniformLocation(program,name),float)
+    }
 
 }
