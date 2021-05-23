@@ -7,10 +7,30 @@ import org.khronos.webgl.WebGLProgram
 import org.khronos.webgl.WebGLRenderingContext as GL
 import org.khronos.webgl.WebGLShader
 
+fun Application.createShader(
+    vertexShaderSource: String = Shader.defaultVertexSource,
+    fragmentShaderSource: String = Shader.defaultFragmentSource
+): Shader = Shader(this, vertexShaderSource, fragmentShaderSource)
+
 class Shader(
     val app: Application,
-    val vsSource: String = """
-        attribute vec4 position;
+    val vsSource: String,
+    val fsSource: String,
+) {
+    private var vertexShader = setupShaderFromSource(GL.VERTEX_SHADER,vsSource)
+    private var fragmentShader = setupShaderFromSource(GL.FRAGMENT_SHADER,fsSource)
+    var program = linkProgram()
+
+    var positionAttributeLocation = app.gl.getAttribLocation(program, "position")
+    var colorAttributeLocation = app.gl.getAttribLocation(program,"v_color")
+    var resolutionUniformLocation = app.gl.getUniformLocation(program, "resolution")
+    var colorUniformLocation = app.gl.getUniformLocation(program, "color")
+    var matrixLocation = app.gl.getUniformLocation(program, "matrix")
+    var vertexIDLocation = app.gl.getAttribLocation(program, "vertexID")
+
+    companion object {
+        val defaultVertexSource = """
+         attribute vec4 position;
         attribute vec4 v_color;
         
         uniform vec2 resolution;
@@ -23,22 +43,17 @@ class Shader(
         
           gl_Position = matrix * position;
           vertex_color = v_color;
-        } 
-    """,
-    val fsSource: String = """
+        }    
+        """.trimIndent()
+        val defaultFragmentSource = """ 
         precision highp float;
         varying vec4 vertex_color;
         
         void main() {
           gl_FragColor = vertex_color;
         }
-    """,
-) {
-    private var vertexShader = setupShaderFromSource(GL.VERTEX_SHADER,vsSource)
-
-    private var fragmentShader = setupShaderFromSource(GL.FRAGMENT_SHADER,fsSource)
-    var program = linkProgram()
-
+        """.trimIndent()
+    }
 
     fun linkProgram(): WebGLProgram? {
         val program = app.gl.createProgram()
@@ -72,11 +87,11 @@ class Shader(
 
     fun bindDefaults(){
         app.gl.uniform2f(
-            app.resolutionUniformLocation,
+            resolutionUniformLocation,
             app.getWidth().toFloat(),
             app.getHeight().toFloat()
         )
-        app.gl.uniform4f(app.colorUniformLocation,
+        app.gl.uniform4f(colorUniformLocation,
             app.fillColor.r.toFloat(),
             app.fillColor.g.toFloat(),
             app.fillColor.b.toFloat(),
@@ -87,13 +102,14 @@ class Shader(
         val w = app.getWidth().toFloat()
         val h = app.getHeight().toFloat()
         val d = 400f
+        //ortho matrix
         val matrix = arrayOf(
             2f / w, 0f, 0f, 0f,
             0f, -2f/ h, 0f, 0f,
             0f, 0f, 2f / d, 0f,
             -1f,  1f,  0f,  1f
         )
-        app.gl.uniformMatrix4fv(app.matrixLocation,false, matrix)
+        app.gl.uniformMatrix4fv(matrixLocation,false, matrix)
         app.gl.viewport(0,0,app.gl.canvas.width,app.gl.canvas.height)
     }
 

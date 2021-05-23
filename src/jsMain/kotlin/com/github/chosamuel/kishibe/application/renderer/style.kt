@@ -5,7 +5,7 @@ import org.khronos.webgl.WebGLRenderingContext as GL
 
 fun Application.fill(r: Double, g: Double, b: Double){
     fillColor = Color(r,g,b)
-    gl.uniform4f(colorUniformLocation,
+    gl.uniform4f(activeShader.colorUniformLocation,
         fillColor.r.toFloat(),
         fillColor.g.toFloat(),
         fillColor.b.toFloat(),

@@ -5,7 +5,6 @@ import com.github.chosamuel.kishibe.math.Vector2
 import com.github.chosamuel.kishibe.math.Vector3
 import org.khronos.webgl.WebGLRenderingContext as GL
 import org.khronos.webgl.Float32Array
-import org.khronos.webgl.Uint16Array
 import org.khronos.webgl.set
 
 class VertexBuffer(val glContext: GL) {
@@ -33,22 +32,22 @@ class VertexBuffer(val glContext: GL) {
         glContext.bindBuffer(GL.ARRAY_BUFFER, idBuffer);
         glContext.bufferData(GL.ARRAY_BUFFER, vertexIds, GL.STATIC_DRAW);
         glContext.vertexAttribPointer(
-            app.vertexIDLocation,
+            app.activeShader.vertexIDLocation,
             1,
             GL.FLOAT,
             false,
             0,
             0
         )
-        glContext.enableVertexAttribArray(app.vertexIDLocation)
+        glContext.enableVertexAttribArray(app.activeShader.vertexIDLocation)
 
         //BIND DATA
         positionBuffer = glContext.createBuffer()
         glContext.bindBuffer(GL.ARRAY_BUFFER, positionBuffer)
         glContext.bufferData(GL.ARRAY_BUFFER, positions, GL.STATIC_DRAW)
-        glContext.enableVertexAttribArray(app.positionAttributeLocation)
+        glContext.enableVertexAttribArray(app.activeShader.positionAttributeLocation)
         glContext.vertexAttribPointer(
-            app.positionAttributeLocation,
+            app.activeShader.positionAttributeLocation,
             3,
             GL.FLOAT,
             false,

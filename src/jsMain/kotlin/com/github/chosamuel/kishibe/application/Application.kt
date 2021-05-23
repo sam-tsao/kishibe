@@ -2,6 +2,7 @@ package com.github.chosamuel.kishibe.application
 
 import com.github.chosamuel.kishibe.application.renderer.Color
 import com.github.chosamuel.kishibe.webgl.Shader
+import com.github.chosamuel.kishibe.webgl.createShader
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.khronos.webgl.WebGLContextAttributes
@@ -18,17 +19,11 @@ fun Application(init: Application.()->Unit) = Application().apply { init() }
 class Application {
     val canvas = document.createElement("canvas") as HTMLCanvasElement
     val gl = canvas.getContext("webgl") as GL
-    var defaultShader = Shader( this)
+    var activeShader = createShader()
     var isSetup = true
     var frameCount = 0
     var timer = Timer()
 
-    var positionAttributeLocation = gl.getAttribLocation(defaultShader.program, "position")
-    var colorAttributeLocation = gl.getAttribLocation(defaultShader.program,"v_color")
-    var resolutionUniformLocation = gl.getUniformLocation(defaultShader.program, "resolution")
-    var colorUniformLocation = gl.getUniformLocation(defaultShader.program, "color")
-    var matrixLocation = gl.getUniformLocation(defaultShader.program, "matrix")
-    var vertexIDLocation = gl.getAttribLocation(defaultShader.program, "vertexID")
 
     var drawFunction = {}
     var setupFunction = {}
@@ -40,18 +35,13 @@ class Application {
         canvas.width = window.innerWidth
         canvas.height =  window.innerHeight
         document.body?.appendChild(canvas)
-        defaultShader.use()
+        activeShader.use()
         initListeners()
         renderScene()
     }
-    fun setActiveShader(vs: String, fs: String){
-        defaultShader = Shader(this,vs,fs)
-        positionAttributeLocation = gl.getAttribLocation(defaultShader.program, "position")
-        colorAttributeLocation = gl.getAttribLocation(defaultShader.program,"v_color")
-        resolutionUniformLocation = gl.getUniformLocation(defaultShader.program, "resolution")
-        colorUniformLocation = gl.getUniformLocation(defaultShader.program, "color")
-        matrixLocation = gl.getUniformLocation(defaultShader.program, "matrix")
-        defaultShader.use()
+    fun setActiveShader(shader: Shader){
+        activeShader = shader
+        activeShader.use()
     }
 
     fun draw() = drawFunction()
