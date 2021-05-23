@@ -1,6 +1,7 @@
 package com.github.chosamuel.kishibe.ui
 
 import com.github.chosamuel.kishibe.application.renderer.Color
+import com.github.chosamuel.kishibe.utils.colorToCSSString
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.dom.addClass
@@ -89,7 +90,6 @@ class Radio(
         styleSheet.innerHTML += styles
         document.head?.appendChild(styleSheet)
     }
-    fun colorToCSSString(c: Color): String = "rgba(${c.r*255},${c.g*255},${c.b*255},${c.a})"
 
     fun calcLeftPadding(): Double{
         return (window.innerWidth - radioWidth) / 2.0
