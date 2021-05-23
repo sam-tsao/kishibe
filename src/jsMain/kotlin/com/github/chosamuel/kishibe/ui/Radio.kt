@@ -6,17 +6,18 @@ import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.dom.addClass
 import kotlinx.dom.removeClass
-import org.w3c.dom.Document
 import org.w3c.dom.Element
-import org.w3c.fetch.Body
 
+//TODO
+//add option to make vertical radio layour
+//add option to set position of radio
 
 class Radio(
     val numBtns: Int = 3
 ) {
     val btnSize: Int = 25
     val btnSpacing: Int = 30
-    val radioWidth = (btnSize * numBtns) + (btnSpacing * (numBtns - 1))
+    val radioLength = (btnSize * numBtns) + (btnSpacing * (numBtns - 1))
     var activeColor = Color(0.8,0.8,0.8,0.8)
     var inactiveColor = Color(0.8,0.8,0.8,0.3)
     var mode = 0
@@ -29,7 +30,7 @@ class Radio(
         val leftPadding = calcLeftPadding()
         val topPadding = calcTopPadding()
         container.setAttribute("style","""
-            width: ${radioWidth}px;
+            width: ${radioLength}px;
             height: ${btnSize}px;
             left: ${leftPadding}px;
             top: ${topPadding}px;
@@ -92,7 +93,7 @@ class Radio(
     }
 
     fun calcLeftPadding(): Double{
-        return (window.innerWidth - radioWidth) / 2.0
+        return (window.innerWidth - radioLength) / 2.0
     }
 
     fun calcTopPadding(): Double {
