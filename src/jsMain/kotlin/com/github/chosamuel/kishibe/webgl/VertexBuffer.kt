@@ -30,6 +30,7 @@ class VertexBuffer(val glContext: GL) {
         }
 
         //BIND DATA
+        glContext.enableVertexAttribArray(app.activeShader.positionAttributeLocation)
         positionBuffer = glContext.createBuffer()
         glContext.bindBuffer(GL.ARRAY_BUFFER, positionBuffer)
         glContext.bufferData(GL.ARRAY_BUFFER, positions, GL.STATIC_DRAW)
@@ -41,7 +42,6 @@ class VertexBuffer(val glContext: GL) {
             0,
             0
         )
-        glContext.enableVertexAttribArray(app.activeShader.positionAttributeLocation)
     }
 
     fun draw(glPrimitiveMode: Int){

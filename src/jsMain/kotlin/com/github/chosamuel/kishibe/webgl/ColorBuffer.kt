@@ -20,7 +20,8 @@ class ColorBuffer(val glContext: GL): Buffer{
                 else -> colors[index].a.toFloat()
             }
         }
-        val colorBuffer = glContext.createBuffer()
+        colorBuffer = glContext.createBuffer()
+        glContext.enableVertexAttribArray(app.activeShader.colorAttributeLocation)
         glContext.bindBuffer(GL.ARRAY_BUFFER, colorBuffer)
         glContext.bufferData(GL.ARRAY_BUFFER, Float32Array(colorData),GL.STATIC_DRAW)
         glContext.vertexAttribPointer(
@@ -31,7 +32,6 @@ class ColorBuffer(val glContext: GL): Buffer{
             0,
             0
         )
-        glContext.enableVertexAttribArray(app.activeShader.colorAttributeLocation)
     }
     fun addColor(c: Color) = colors.add(c)
 

@@ -23,25 +23,25 @@ class Shader(
 
     var positionAttributeLocation = app.gl.getAttribLocation(program, "position")
     var colorAttributeLocation = app.gl.getAttribLocation(program,"v_color")
+    var vertexIdLocation = app.gl.getAttribLocation(program, "vertexID")
     var resolutionUniformLocation = app.gl.getUniformLocation(program, "resolution")
     var colorUniformLocation = app.gl.getUniformLocation(program, "color")
     var matrixLocation = app.gl.getUniformLocation(program, "matrix")
 
     companion object {
         val defaultVertexSource = """
-         attribute vec4 position;
+        attribute vec4 position;
         attribute vec4 v_color;
+        attribute float vertexID;
         
         uniform vec2 resolution;
         uniform vec4 color;
         uniform mat4 matrix;
         
         varying vec4 vertex_color;
-
         void main() {
-        
           gl_Position = matrix * position;
-          vertex_color = v_color;
+         vertex_color = v_color;
         }    
         """.trimIndent()
         val defaultFragmentSource = """ 

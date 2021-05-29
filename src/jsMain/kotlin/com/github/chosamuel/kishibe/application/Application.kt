@@ -20,13 +20,10 @@ class Application {
     val canvas = document.createElement("canvas") as HTMLCanvasElement
     val gl = canvas.getContext("webgl") as GL
     var activeShader = createShader()
-    var isSetup = true
+    var isSetup = false
     var frameCount = 0
     var timer = Timer()
-
-
-    var drawFunction = {}
-    var setupFunction = {}
+    var drawProgram: Program = Program()
 
     //STYLES
     var fillColor = Color(1.0,1.0,1.0,1.0)
@@ -43,17 +40,6 @@ class Application {
         activeShader = shader
         activeShader.use()
     }
-
-    fun draw() = drawFunction()
-
-    fun draw(fn: ()->Unit){
-        drawFunction = fn
-    }
-    fun setup(fn: ()->Unit){
-        setupFunction = fn
-        isSetup = false
-    }
-
     var onClick = {}
     var onDragged = {}
     var onRelease = {}
@@ -101,16 +87,31 @@ class Application {
         })
     }
 
-
     fun renderScene() {
         if(!isSetup){
-            setupFunction()
-            isSetup = true
+            drawProgram.setup()
         }
-        draw()
+        drawProgram.drawLoop()
         frameCount++
         window.requestAnimationFrame {
             renderScene()
         }
     }
+
+    fun Program(init: Program.()->Unit){
+        val p = Program()
+        p.setup =  {
+            p.init()
+            this.isSetup = true
+        }
+        drawProgram = p
+    }
+    class Program {
+        var setup = {}
+        var drawLoop = {}
+        fun Draw(fn: () -> Unit){
+            drawLoop = fn
+        }
+    }
+
 }
