@@ -12,6 +12,8 @@ fun Application.fill(r: Double, g: Double, b: Double){
         fillColor.a.toFloat()
     )
 }
+fun Application.fill(grayscale: Double) = fill(grayscale,grayscale,grayscale)
+
 
 fun Application.clear(
     r: Double = 1.0,

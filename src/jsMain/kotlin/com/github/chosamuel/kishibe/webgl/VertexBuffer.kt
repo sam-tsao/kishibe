@@ -28,24 +28,11 @@ class VertexBuffer(val glContext: GL) {
         for(i in 0 until numVertices()){
             vertexIds[i] = i.toFloat()
         }
-        val idBuffer = glContext.createBuffer();
-        glContext.bindBuffer(GL.ARRAY_BUFFER, idBuffer);
-        glContext.bufferData(GL.ARRAY_BUFFER, vertexIds, GL.STATIC_DRAW);
-        glContext.vertexAttribPointer(
-            app.activeShader.vertexIDLocation,
-            1,
-            GL.FLOAT,
-            false,
-            0,
-            0
-        )
-        glContext.enableVertexAttribArray(app.activeShader.vertexIDLocation)
 
         //BIND DATA
         positionBuffer = glContext.createBuffer()
         glContext.bindBuffer(GL.ARRAY_BUFFER, positionBuffer)
         glContext.bufferData(GL.ARRAY_BUFFER, positions, GL.STATIC_DRAW)
-        glContext.enableVertexAttribArray(app.activeShader.positionAttributeLocation)
         glContext.vertexAttribPointer(
             app.activeShader.positionAttributeLocation,
             3,
@@ -54,6 +41,7 @@ class VertexBuffer(val glContext: GL) {
             0,
             0
         )
+        glContext.enableVertexAttribArray(app.activeShader.positionAttributeLocation)
     }
 
     fun draw(glPrimitiveMode: Int){

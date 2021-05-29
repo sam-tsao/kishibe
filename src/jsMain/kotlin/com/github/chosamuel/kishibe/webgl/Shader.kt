@@ -26,7 +26,6 @@ class Shader(
     var resolutionUniformLocation = app.gl.getUniformLocation(program, "resolution")
     var colorUniformLocation = app.gl.getUniformLocation(program, "color")
     var matrixLocation = app.gl.getUniformLocation(program, "matrix")
-    var vertexIDLocation = app.gl.getAttribLocation(program, "vertexID")
 
     companion object {
         val defaultVertexSource = """
